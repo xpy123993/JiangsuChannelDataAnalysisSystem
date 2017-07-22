@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<html>
+    <head>
+        <title>江苏航道数据综合分析系统</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li class="active">
+                                    <a href="#">主页</a>
+                                </li>
+                                <li>
+                                    <a href="detailpage.html">报表</a>
+                                </li>
+                                <li>
+                                    <a href="chart.html">趋势图</a>
+                                </li>
+                                <li>
+                                    <a href="weightchart.html">分析图</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="carousel slide" id="carousel-530572">
+                <ol class="carousel-indicators">
+                    <li class="active" data-slide-to="0" data-target="#carousel-530572">
+                    </li>
+                    <li data-slide-to="1" data-target="#carousel-530572">
+                    </li>
+                    <li data-slide-to="2" data-target="#carousel-530572">
+                    </li>
+                    <li data-slide-to="3" data-target="#carousel-530572">
+                    </li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img alt="" src="resources/chart_1.png" />
+                        <div class="carousel-caption" style="color: whitesmoke; background-color: black; opacity: 0.7">
+                            <div>
+                                <h1 style="color: #ff3300">
+                                    江苏航道数据综合分析系统
+                                </h1>
+                                <p>
+                                    按月度、季度、年度展示闸次日期信息、提放分析信息和平均过闸时间信息
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img alt="" src="resources/chart_2.png" />
+                        <div class="carousel-caption" style="color: whitesmoke; background-color: black; opacity: 0.7">
+                            <div>
+                                <h1 style="color: #ff3300">
+                                    江苏航道数据综合分析系统
+                                </h1>
+                                <p>
+                                    按月度、季度、年度展示闸次日期信息、提放分析信息和平均过闸时间信息
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img alt="" src="resources/table_1.png" />
+                        <div class="carousel-caption" style="color: whitesmoke; background-color: black; opacity: 0.7">
+                            <div>
+                                <h1 style="color: #ff3300">
+                                    江苏航道数据综合分析系统
+                                </h1>
+                                <p>
+                                    按月度、季度、年度展示闸次日期信息、提放分析信息和平均过闸时间信息
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img alt="" src="resources/table_2.png" />
+                        <div class="carousel-caption" style="color: whitesmoke; background-color: black; opacity: 0.7">
+                            <div>
+                                <h1 style="color: #ff3300">
+                                    江苏航道数据综合分析系统
+                                </h1>
+                                <p>
+                                    按月度、季度、年度展示闸次日期信息、提放分析信息和平均过闸时间信息
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <a class="left carousel-control" href="#carousel-530572" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a> 
+                <a class="right carousel-control" href="#carousel-530572" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+
+            <br />
+            <br />
+
+            <div class="row clearfix">
+                <div class="col-md-3 column" >
+                    <h3 style="color: #336600">
+                        闸次日期信息
+                    </h3>
+                    <p>
+                        按月度、季度、年度展示各船闸开闸次数、开闸天数等信息。
+                    </p>
+                    <p>
+                        <a class="btn" href="detailpage.html?request_type=0">月度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=0">月度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=3">季度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=3">季度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=6">年度报表(半年) »</a>
+                        <a class="btn" href="chart.html?request_type=6">年度趋势图(半年) »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=9">年度报表(全年) »</a>
+                        <a class="btn" href="chart.html?request_type=9">年度趋势图(全年) »</a>
+                        <br />
+                    </p>
+                </div>
+                <div class="col-md-3 column">
+                    <h3 style="color: #336600">
+                        提放分析信息
+                    </h3>
+                    <p>
+                        按月度、季度、年度展示各船闸通过船只数量、载重量等信息
+                    </p>
+                    <p>
+                        <a class="btn" href="detailpage.html?request_type=1">月度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=1">月度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=4">季度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=4">季度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=7">年度报表(半年) »</a>
+                        <a class="btn" href="chart.html?request_type=7">年度趋势图(半年) »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=10">年度报表(全年) »</a>
+                        <a class="btn" href="chart.html?request_type=10">年度趋势图(全年) »</a>
+                        <br />
+                    </p>
+                </div>
+                <div class="col-md-3 column">
+                    <h3 style="color: #336600">
+                        平均过闸时间信息
+                    </h3>
+                    <p>
+                        按月度、季度、年度展示各船闸上下行船只的平均过闸时间
+                    </p>
+                    <p>
+                        <a class="btn" href="detailpage.html?request_type=2">月度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=2">月度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=5">季度报表 »</a>
+                        <a class="btn" href="chart.html?request_type=5">季度趋势图 »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=8">年度报表(半年) »</a>
+                        <a class="btn" href="chart.html?request_type=8">年度趋势图(半年) »</a>
+                        <br />
+
+                        <a class="btn" href="detailpage.html?request_type=11">年度报表(全年) »</a>
+                        <a class="btn" href="chart.html?request_type=11">年度趋势图(全年) »</a>
+                        <br />
+                    </p>
+                </div>
+                <div class="col-md-3 column">
+                    <h3 style="color: #336600">
+                        货物成分分析图
+                    </h3>
+                    <p>
+                        按月度、季度、年度展示各船闸经过船只的货物种类及所占比重
+                    </p>
+                    <p>
+                        <a class="btn" href="weightchart.html?request_type=0">月度分析图 »</a>
+                        <a class="btn" href="weightchart.html?request_type=1">季度分析图 »</a>
+                        <a class="btn" href="weightchart.html?request_type=2">年度分析图 »</a>
+                        
+                    </p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

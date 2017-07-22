@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>江苏航道数据综合分析系统</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-table.css" type="text/css">
+
+        <script src="js/jquery.min.js"></script>
+
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/bootstrap.js"></script>
+
+        <script src="js/bootstrap-table.min.js"></script>
+        <script src="js/bootstrap-table-locale.js" charset="gbk"></script>
+        <script src="js/table_utils.js"></script>
+
+        <script src="js/chart.bundle.min.js" ></script>
+        <script src="js/highcharts.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="index.html">主页</a>
+                                </li>
+                                <li>
+                                    <a href="detailpage.html">报表</a>
+                                </li>
+                                <li>
+                                    <a href="chart.html">趋势图</a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">分析图</a>
+                                </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+
+                            </ul>
+                        </div>
+                    </nav>
+                    <div class="row clearfix">
+                        <div class="col-md-2 column">
+
+                            <div class="list-group">
+                                <a href="index.html" class="list-group-item active">主页</a>
+                            </div>
+
+                            <div class="list-group">
+                                <div class="list-group-item active">
+                                    <span class="badge">3</span>
+                                    <a href="#" class="list-group-item-heading active">
+                                        提放分析图
+                                    </a>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <a href="weightchart.html?request_type=0" class="list-group-item">月度分析图</a>
+                                    <a href="weightchart.html?request_type=1" class="list-group-item">季度分析图</a>
+                                    <a href="weightchart.html?request_type=2" class="list-group-item">年度分析图</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <script src="js/chart_utils.js" charset="gbk"></script>
+                        <script>
+                            function GetRequest() {
+                                var url = location.search;
+                                var req = new Object();
+                                req["request_type"] = "2";
+                                if (url.indexOf("?") !== -1) {
+                                    var str = url.substr(1);
+                                    strs = str.split("&");
+                                    for (var i = 0; i < strs.length; i++) {
+                                        req[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                                    }
+                                }
+                                return req;
+                            }
+                            function update_chart() {
+                                var request_type = parseInt(GetRequest()["request_type"]);
+                                jQuery.getJSON(
+                                        "query",
+                                        {
+                                            request_type: request_type,
+                                            request_chart: "pie",
+                                            addr1: $("#addr1_select").val(),
+                                            addr2: $("#addr2_select").val(),
+                                            portname: $("#portname_select").val(),
+                                            cscheduledate: $("#cscheduledate_select").val()
+                                        },
+                                        function (str) {
+
+                                            var dataSet = new Array();
+                                            var temp = new Object();
+
+                                            var sum = 0.0;
+
+                                            $.each(str, function (i, item) {
+                                                sum += parseFloat(item.TYPEVALUE);
+                                            });
+
+                                            $.each(str, function (i, item) {
+                                                temp = new Object();
+                                                temp["name"] = item.TYPENAME;
+                                                temp["y"] = item.TYPEVALUE * 100.0 / sum;
+                                                dataSet.push(temp);
+                                            });
+
+                                            Highcharts.chart('myChart', {
+                                                chart: {
+                                                    plotBackgroundColor: null,
+                                                    plotBorderWidth: null,
+                                                    plotShadow: false,
+                                                    type: 'pie'
+                                                },
+                                                title: {
+                                                    text: '货物所占比重'
+                                                },
+                                                tooltip: {
+                                                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                                                },
+                                                plotOptions: {
+                                                    pie: {
+                                                        allowPointSelect: true,
+                                                        cursor: 'pointer',
+                                                        dataLabels: {
+                                                            enabled: true,
+                                                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                                            style: {
+                                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                series: [{
+                                                        name: '该类型占同时间总载重比',
+                                                        colorByPoint: true,
+                                                        data: dataSet
+                                                    }]
+                                            });
+                                        });
+                            }
+
+                        </script>
+                        <script>
+
+
+                            function update_addr1_select() {
+                                jQuery.getJSON("select_source", function (str) {
+                                    $("#addr1_select").empty();
+                                    $.each(str, function (i, item) {
+                                        $("#addr1_select").append("<option value=\'" + item.LISTITEM + "\'>" + item.LISTITEM + "</option>");
+                                    });
+                                    $("#addr1_select")[0].selectedIndex = 0;
+                                    update_addr2_select();
+                                });
+                            }
+                            function update_addr2_select() {
+                                var addr1_str = $("#addr1_select").val();
+
+                                jQuery.getJSON("select_source", {addr1: addr1_str}, function (str) {
+                                    $("#addr2_select").empty();
+                                    $.each(str, function (i, item) {
+                                        $("#addr2_select").append("<option value=\'" + item.LISTITEM + "\'>" + item.LISTITEM + "</option>");
+                                    });
+                                    $("#addr2_select")[0].selectedIndex = 0;
+                                    update_portname_select();
+                                });
+                            }
+                            function update_portname_select() {
+                                var addr1_str = $("#addr1_select").val();
+                                var addr2_str = $("#addr2_select").val();
+                                jQuery.getJSON("select_source", {addr1: addr1_str, addr2: addr2_str}, function (str) {
+                                    $("#portname_select").empty();
+                                    $.each(str, function (i, item) {
+                                        $("#portname_select").append("<option value=\'" + item.LISTITEM + "\'>" + item.LISTITEM + "</option>");
+                                    });
+                                    $("#portname_select")[0].selectedIndex = 0;
+                                    update_cscheduledate_select();
+                                });
+                            }
+                            function update_cscheduledate_select() {
+                                var addr1_str = $("#addr1_select").val();
+                                var addr2_str = $("#addr2_select").val();
+                                var portname_str = $("#portname_select").val();
+                                var request_type = parseInt(GetRequest()["request_type"]);
+                                jQuery.getJSON("select_source", {
+                                    addr1: addr1_str,
+                                    addr2: addr2_str,
+                                    portname: portname_str,
+                                    request_type: request_type
+                                }, function (str) {
+                                    $("#cscheduledate_select").empty();
+                                    $.each(str, function (i, item) {
+                                        $("#cscheduledate_select").append("<option value=\'" + item.LISTITEM + "\'>" + item.LISTITEM + "</option>");
+                                    });
+                                    $("#cscheduledate_select")[0].selectedIndex = 0;
+
+                                    update_chart();
+
+                                });
+                            }
+                            $(document).ready(function () {
+                                update_addr1_select();
+                                $("#addr1_select").change(update_addr2_select);
+                                $("#addr2_select").change(update_portname_select);
+                                $("#portname_select").change(update_cscheduledate_select);
+                                $("#cscheduledate_select").change(update_chart);
+
+                            });
+                        </script>
+                        <div class="col-md-10 column">
+                            <div class="form-inline">
+                                <select id="addr1_select" class="form-control"></select>
+                                <select id="addr2_select" class="form-control"></select>
+                                <select id="portname_select" class="form-control"></select>
+                                <select id="cscheduledate_select" class="form-control"></select>
+                            </div>
+                            <br />
+                            <table class="table" id="table"></table>
+                            <br />
+                            <div id="myChart" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

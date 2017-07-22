@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>江苏航道数据综合分析系统</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css"> 
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-table.css" type="text/css">
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+
+        <script src="js/bootstrap-table.min.js"></script>
+        <script src="js/bootstrap-table-locale.js" charset="gbk"></script>
+
+        <script src="js/table_utils.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+                        </div>
+
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="index.html">主页</a>
+                                </li>
+                                <li class="active">
+                                    <a href="#">报表</a>
+                                </li>
+                                <li>
+                                    <a href="chart.html">趋势图</a>
+                                </li>
+                                <li>
+                                    <a href="weightchart.html">分析图</a>
+                                </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+
+                            </ul>
+                        </div>
+
+                    </nav>
+
+                    <div class="row clearfix">
+                        <div class="col-md-2 column">
+
+                            <div class="list-group">
+                                <a href="index.html" class="list-group-item active">主页</a>
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item active">
+                                    <span class="badge">3</span>
+                                    <a href="#" class="list-group-item-heading active">
+                                        月度报表
+                                    </a>
+                                </div>
+                                <div class="list-group-item">
+                                    <a href="detailpage.html?request_type=0" class="list-group-item">闸次信息表</a>
+                                    <a href="detailpage.html?request_type=1" class="list-group-item">提放信息表</a>
+                                    <a href="detailpage.html?request_type=2" class="list-group-item">平均过闸时间表</a>
+                                </div>
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item active">
+                                    <span class="badge">3</span>
+                                    <a href="#" class="list-group-item-heading active">
+                                        季度报表
+                                    </a>
+                                </div>
+                                <div class="list-group-item">
+                                    <a href="detailpage.html?request_type=3" class="list-group-item">闸次信息表</a>
+                                    <a href="detailpage.html?request_type=4" class="list-group-item">提放信息表</a>
+                                    <a href="detailpage.html?request_type=5" class="list-group-item">平均过闸时间表</a>
+                                </div>
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item active">
+                                    <span class="badge">3</span>
+                                    <a href="#" class="list-group-item-heading active">
+                                        半年度报表
+                                    </a>
+                                </div>
+                                <div class="list-group-item">
+                                    <a href="detailpage.html?request_type=6" class="list-group-item">闸次信息表</a>
+                                    <a href="detailpage.html?request_type=7" class="list-group-item">提放信息表</a>
+                                    <a href="detailpage.html?request_type=8" class="list-group-item">平均过闸时间表</a>
+                                </div>
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item active">
+                                    <span class="badge">3</span>
+                                    <a href="#" class="list-group-item-heading active">
+                                        年度报表
+                                    </a>
+                                </div>
+                                <div class="list-group-item">
+                                    <a href="detailpage.html?request_type=9" class="list-group-item">闸次信息表</a>
+                                    <a href="detailpage.html?request_type=10" class="list-group-item">提放信息表</a>
+                                    <a href="detailpage.html?request_type=11" class="list-group-item">平均过闸时间表</a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-10 column">
+                            <script>
+                                function update_table(type) {
+                                    $("table").empty();
+                                    $("table").bootstrapTable(fill_data(type, {request_type: type}));
+                                    //$("table").bootstrapTable('refresh'); 
+                                }
+                                function GetRequest() {
+                                    var url = location.search;
+                                    var req = new Object();
+                                    req["request_type"] = "0";
+                                    if (url.indexOf("?") !== -1) {
+                                        var str = url.substr(1);
+                                        strs = str.split("&");
+                                        for (var i = 0; i < strs.length; i++) {
+                                            req[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                                        }
+                                    }
+                                    return req;
+                                }
+
+                                function post(URL, PARAMS) {
+                                    var temp = document.createElement("FORM");
+                                    temp.action = URL;
+                                    temp.method = "POST";
+                                    temp.style.display = "none";
+                                    for (var x in PARAMS) {
+                                        var opt = document.createElement("TEXTAREA");
+                                        opt.name = x;
+                                        opt.value = PARAMS[x];
+                                        temp.appendChild(opt);
+                                    }
+                                    document.body.appendChild(temp);
+                                    temp.submit();
+                                    return temp;
+                                }
+
+                                function onItemClick(rowIndex) {
+                                    var data = $("#table").bootstrapTable('getData')[rowIndex];
+                                    var Request = GetRequest();
+                                    var val = parseInt(Request["request_type"]);
+                                    if (val % 3 === 2) {
+                                        post('details.jsp', {
+                                            request_type: val,
+                                            addr1: data.ADDR1,
+                                            addr2: data.ADDR2,
+                                            portname: data.PORTNAME,
+                                            direction: data.DIRECTION,
+                                            cscheduledate: data.CSCHEDULEDATE,
+                                            request_chart: "details"
+                                        });
+                                    } else {
+                                        post('details.jsp', {
+                                            request_type: val,
+                                            addr1: data.ADDR1,
+                                            addr2: data.ADDR2,
+                                            portname: data.PORTNAME,
+                                            cscheduledate: data.CSCHEDULEDATE,
+                                            request_chart: "details"
+                                        });
+                                    }
+                                }
+                                function update_schedule_list() {
+                                    var Request = new Object();
+                                    Request = GetRequest();
+                                    var val = parseInt(Request["request_type"]);
+
+                                    jQuery.getJSON("./query", {
+                                        request_chart: "timelabel",
+                                        request_type: val
+                                    }, function (str) {
+                                        $("#start_cschedule").empty();
+                                        $("#end_cschedule").empty();
+                                        $.each(str, function (i, item) {
+                                            $("#start_cschedule").append("<option value=\'" + item.TIMELABEL + "\'>" + item.TIMELABEL + "</option>");
+                                            $("#end_cschedule").append("<option value=\'" + item.TIMELABEL + "\'>" + item.TIMELABEL + "</option>");
+                                        });
+                                        $("#start_cschedule")[0].selectedIndex = 0;
+                                        $("#end_cschedule")[0].selectedIndex = eval(str).length - 1;
+
+                                    });
+                                }
+                                function on_cschedule_changed() {
+                                    var Request = new Object();
+                                    Request = GetRequest();
+                                    var val = parseInt(Request["request_type"]);
+                                    var start_date = $('#start_cschedule').val();
+                                    var end_date = $('#end_cschedule').val();
+                                    
+                                    
+                                    
+                                    $("table").bootstrapTable('destroy').bootstrapTable( fill_data(val, {
+                                        request_type: Request["request_type"],
+                                        start_cschedule: start_date,
+                                        end_cschedule: end_date
+                                    }));
+                                    
+
+                                }
+                                $(document).ready(function () {
+                                    var Request = new Object();
+                                    Request = GetRequest();
+                                    var val = parseInt(Request["request_type"]);
+                                    update_table(val);
+                                    update_schedule_list();
+                                    //$("table").bootstrapTable(fill_data(val));
+                                    
+                                    $("#start_cschedule").change(on_cschedule_changed);
+                                    $("#end_cschedule").change(on_cschedule_changed);
+                                });
+
+                            </script>
+                            <div class="form-inline">
+                            开始年份：<select id="start_cschedule" ></select>
+                            &nbsp;&nbsp;&nbsp;结束年份：<select id="end_cschedule" ></select>
+                            </div>
+                            <br />
+                            <table id="table" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            编号
+                                        </th>
+                                        <th>
+                                            产品
+                                        </th>
+                                        <th>
+                                            交付时间
+                                        </th>
+                                        <th>
+                                            状态
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            TB - Monthly
+                                        </td>
+                                        <td>
+                                            01/04/2012
+                                        </td>
+                                        <td>
+                                            Default
+                                        </td>
+                                    </tr>
+                                    <tr class="success">
+                                        <td>
+                                            1
+                                        </td>
+                                        <td>
+                                            TB - Monthly
+                                        </td>
+                                        <td>
+                                            01/04/2012
+                                        </td>
+                                        <td>
+                                            Approved
+                                        </td>
+                                    </tr>
+                                    <tr class="error">
+                                        <td>
+                                            2
+                                        </td>
+                                        <td>
+                                            TB - Monthly
+                                        </td>
+                                        <td>
+                                            02/04/2012
+                                        </td>
+                                        <td>
+                                            Declined
+                                        </td>
+                                    </tr>
+                                    <tr class="warning">
+                                        <td>
+                                            3
+                                        </td>
+                                        <td>
+                                            TB - Monthly
+                                        </td>
+                                        <td>
+                                            03/04/2012
+                                        </td>
+                                        <td>
+                                            Pending
+                                        </td>
+                                    </tr>
+                                    <tr class="info">
+                                        <td>
+                                            4
+                                        </td>
+                                        <td>
+                                            TB - Monthly
+                                        </td>
+                                        <td>
+                                            04/04/2012
+                                        </td>
+                                        <td>
+                                            Call in to confirm
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
